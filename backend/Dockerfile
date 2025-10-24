@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 # Copiar y instalar dependencias
 COPY package*.json ./
-RUN npm install --production
+RUN npm install 
 
 # Copiar código fuente
 COPY . .
@@ -19,4 +19,4 @@ RUN npm run build
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]

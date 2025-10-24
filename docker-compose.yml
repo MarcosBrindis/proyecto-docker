@@ -50,9 +50,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args: 
+      #args: 
         # Pasa la URL de la API al build
-        VITE_API_URL: "http://backend:${API_PORT}/api" 
+        #VITE_API_URL: "http://backend:${API_PORT}/api" 
     container_name: marcos_brindis_frontend
     ports:
       # Mapea usando la variable
