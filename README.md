@@ -127,7 +127,7 @@ Credenciales 
 - Usuario: marcos
 - Contraseña: <<--- CAMBIADO (Definida en el archivo .env)
 
-- Probar persistencia:
+## Probar persistencia:
 
 1. Crear uno o más usuarios.
 2. Detener y reiniciar contenedores:
@@ -140,18 +140,10 @@ docker-compose up --build
 curl http://localhost:5000/api/users
 ```
 
-
- Autor
-
-Marcos Brindis
-
-Arquitectura Hexagonal en Backend
-
-Clean Architecture en Frontend
-
 ## Autor
-Marcos Brindis
-
+Marcos D Brindis
+Arquitectura Hexagonal en Backend
+Clean Architecture en Frontend
 
 ## Anexos (comandos útiles)
 
