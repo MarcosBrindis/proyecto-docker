@@ -33,8 +33,8 @@ proyecto-docker/
 ```
 
 El flujo de datos típico:
-1. El usuario abre la UI en su navegador (ej. http://localhost:3000 o http://<IP-PUBLICA>:3000).
-2. El código React (ejecutándose en el navegador) envía peticiones HTTP a la IP pública de la API (ej. http://localhost:5000/api o http://<IP-PUBLICA>:5000/api).
+El usuario abre la UI en su **navegador** (ej. `http://localhost:3000` o `http://<IP-PUBLICA>:3000`).
+2. El código React (ejecutándose en el navegador) envía peticiones HTTP... (ej. `http://localhost:5000/api` o `http://<IP-PUBLICA>:5000/api`).
 3. El contenedor del Backend (marcos_brindis_api) recibe esta petición externa.
 4. El Backend procesa la lógica y se conecta al contenedor de la base de datos usando el nombre del servicio (host: postgres, puerto: 5432).
 5. PostgreSQL (Contenedor marcos_brindis_db) persiste los datos en el volumen nombrado postgres_data.
