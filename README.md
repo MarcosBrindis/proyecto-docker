@@ -4,7 +4,7 @@
 Arquitectura de microservicios compuesta por tres servicios que se comunican mediante una red interna Docker:
 
 - **Frontend**: React + TypeScript + Vite  
-- **Backend**: Node.js + TypeScript + Arquitectura Hexagonal  
+- **Backend**: Node.js + TypeScript  + Arquitectura Hexagonal
 - **Base de Datos**: PostgreSQL con persistencia
 
 El proyecto está pensado para ejecutarse con Docker Compose; los contenedores se comunican por nombre de servicio dentro de la misma red. El frontend consume la API REST del backend, el backend realiza operaciones CRUD sobre la base de datos.
@@ -33,10 +33,11 @@ proyecto-docker/
 ```
 
 El flujo de datos típico:
-1. Usuario abre la UI en el Frontend (puerto 3000).
-2. Frontend envía peticiones HTTP a la API (URL interna: http://marcos_brindis_api:5000/api).
-3. Backend procesa la lógica y consulta/actualiza PostgreSQL (host: marcos_brindis_postgres).
-4. PostgreSQL persiste los datos en el volumen nombrado postgres_data.
+1. El usuario abre la UI en su navegador (ej. http://localhost:3000 o http://<IP-PUBLICA>:3000).
+2. El código React (ejecutándose en el navegador) envía peticiones HTTP a la IP pública de la API (ej. http://localhost:5000/api o http://<IP-PUBLICA>:5000/api).
+3. El contenedor del Backend (marcos_brindis_api) recibe esta petición externa.
+4. El Backend procesa la lógica y se conecta al contenedor de la base de datos usando el nombre del servicio (host: postgres, puerto: 5432).
+5. PostgreSQL (Contenedor marcos_brindis_db) persiste los datos en el volumen nombrado postgres_data.
 
 ## Cómo Levantar el Proyecto
 
@@ -59,10 +60,13 @@ cd proyecto-docker
 
 
 2. Crear archivo de entorno local
+Crea un archivo llamado .env en la raíz del proyecto.
 ```bash
 touch .env 
-nano .env
-#estos son los datos que se necesitan
+```
+Abre el archivo (ej. nano .env) y llénalo con la siguiente estructura (reemplazando los valores si es necesario):
+
+```text
 # Variables de la Base de Datos
 POSTGRES_DB=
 POSTGRES_USER=
@@ -77,7 +81,7 @@ FRONT_PORT=3000
 ```bash
 docker-compose up --build
 ```
-
+(Puedes añadir -d para ejecutarlo en segundo plano)
 
 4. Acceder a los servicios
 
@@ -122,29 +126,34 @@ CREATE TABLE users (
 ```
 La inicialización de la tabla está automatizada en el backend (PostgresConnection.initializeDatabase) para crear la tabla `users` y cargar datos de ejemplo si la tabla está vacía.
 
-Credenciales 
+### Credenciales 
 - Database: marcos_brindis_db
 - Usuario: marcos
-- Contraseña: <<--- CAMBIADO (Definida en el archivo .env)
+- Contraseña: (Definida en el archivo .env)
 
 ## Probar persistencia:
-
-1. Crear uno o más usuarios.
-2. Detener y reiniciar contenedores:
+Para verificar que el volumen postgres_data funciona:
+1. Levanta los servicios y crea un nuevo usuario desde el frontend.
+2. Reinicia los contenedores (esto no los borra):
+```bash
+docker-compose restart
+```
+3. Refresca el frontend. El usuario debe seguir allí.
+### Prueba Fuerte (Opcional)
+1. Detén y elimina los contenedores:
 ```bash
 docker-compose down
-docker-compose up --build
 ```
-3. Comprobar que los usuarios siguen presentes:
+2. Levántalos de nuevo:
 ```bash
-curl http://localhost:5000/api/users
+docker-compose up -d
 ```
+3. El usuario debe seguir allí.
 
 ## Autor
-Marcos D Brindis
-Arquitectura Hexagonal en Backend
-Clean Architecture en Frontend
-
+### Marcos D Brindis
+- Arquitectura Hexagonal en Backend
+- Clean Architecture en Frontend
 ## Anexos (comandos útiles)
 
 - Ver logs de todos los servicios:
