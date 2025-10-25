@@ -11,14 +11,16 @@ El proyecto está pensado para ejecutarse con Docker Compose; los contenedores s
 
 ## Estructura del proyecto
 
+```text
 proyecto-docker/
 ├── backend/         # Código del API (TypeScript, Dockerfile)
 ├── frontend/        # Código del Frontend (Vite, React, Dockerfile)
 ├── docker-compose.yml
 ├── .env
 └── README.md
+```
 
- 🏗️ Arquitectura
+## Arquitectura
 
 ```text
 ┌─────────────┐       ┌─────────────┐       ┌──────────────┐
